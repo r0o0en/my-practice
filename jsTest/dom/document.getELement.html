@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>document.getElement 和 document.getElements</title>
+		<link rel="stylesheet" type="text/css" href="../../public/js/highlight/styles/atelier-forest-dark.css"/>
+		<link rel="stylesheet" type="text/css" href="../../public/style/lib.css"/>
+	</head>
+	<body class="both-slides">
+		<article>
+			<header>
+				<h1>document.getElement</h1>
+				<p>获取页面中的元素（dom对象）</p>
+			</header>
+			<section>
+				<h2>常用发放</h2>
+				<dl>
+					<dt>getElementBy<span class="cl-red">Id</span>(id)</dt>
+					<dd>通过 id 获得相同 <span class="underline-red">id属性</span>的<span class="cl-red">第一个元素</span>。</dd>
+					<dt>getElement<span class="cl-red">s</span>By<span class="cl-red">Name</span>(name)</dt>
+					<dd>通过元素的 <span class="underline-red">name属性</span> 来获取对应元素集合</dd>
+					<dt>getElement<span class="cl-red">s</span>By<span class="cl-red">TagName</span>(tagName)</dt>
+					<dd>通过tagName(<span class="underline-red">标签名称</span>)获取对应的元素集合。</dd>
+					<dt>getELement<span class="cl-red">s</span>By<span class="cl-red">ClassName</span>(class)</dt>
+					<dd>通过class(<span class="underline-red">类名</span>)获取对应的元素集合</dd>
+					<dt>querySelector(cssSelector)</dt>
+					<dd>通过<span class="underline-red">css选择器</span>获取对应的元素中的<span class="cl-red">第一个元素</span></dd>
+					<dt>querySelectorAll(cssSelector)</dt>
+					<dd>通过<span class="underline-red">css选择器</span>获取对应的元素集合</dd>
+				</dl>
+				<table class="text-center first-text-left">
+					<tr>
+						<th>docuemnt.</th>
+						<th>参数</th>
+						<th>返回值</th>
+						<th>兼容性</th>
+					</tr>
+					<tr>
+						<td>getElmentById</td>
+						<td>id属性</td>
+						<td>domObject</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>getElementsByName</td>
+						<td>name属性</td>
+						<td>array</td>
+						<td><span class="cl-red">伪属性（IE8及以下）</span></td>
+					</tr>
+					<tr>
+						<td>getElementsByTagName</td>
+						<td>标签名称</td>
+						<td>array</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>getElementsByClassName</td>
+						<td>类名</td>
+						<td>array</td>
+						<td><span class="cl-red">IE8（包括）↓</span></td>
+					</tr>
+					<tr>
+						<td>querySelector</td>
+						<td>css选择器</td>
+						<td>domObject</td>
+						<td><span class="cl-red">IE7（包括）↓</span></td>
+					</tr>
+					<tr>
+						<td>querySelectorAll</td>
+						<td>css选择器</td>
+						<td>array</td>
+						<td><span class="cl-red">IE7（包括）↓</span></td>
+					</tr>
+				</table>
+				<p><strong class="cl-red">伪属性：</strong><span class="underline-red">div、span在标准文档中没有规定必须有Name属性的元素，它们的name属性就是伪属性。</span></p>
+			</section>
+			
+			<section>
+				<h2>getElementBy<span class="cl-red">Id</span>(id)</h2>
+				<p>通过id属性来获取对应的元素，且：无论页面上有多少个相同ID的元素存在，都只会获取第一个满足条件的元素。</p>
+				<pre>
+					<code class="html">
+&#60;&#117;&#108;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#105;&#100;&#61;&#34;&#116;&#101;&#115;&#116;&#97;&#34;&#62;&#49;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#105;&#100;&#61;&#34;&#116;&#101;&#115;&#116;&#97;&#34;&#62;&#50;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#105;&#100;&#61;&#34;&#116;&#101;&#115;&#116;&#97;&#34;&#62;&#51;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#105;&#100;&#61;&#34;&#116;&#101;&#115;&#116;&#97;&#34;&#62;&#52;&#60;&#47;&#108;&#105;&#62;&#10;&#60;&#47;&#117;&#108;&#62;
+&lt;script type="text/javascript"&gt;
+	document.getElementById('testa').innerHTML; //echo 1
+&lt;/script&gt;					
+
+					</code>
+				</pre>
+			</section>
+			
+			<section>
+				<h2>getElement<span class="cl-red">s</span>By<span class="cl-red">Name</span>(name)</h2>
+				<p>通过元素的 <span class="underline-red">name属性</span> 来获取对应元素</p>
+				<p>getElementsByName 在部分低版本浏览器中不支持伪属性</p>
+				<pre>
+					<code>
+&#60;&#117;&#108;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#110;&#97;&#109;&#97;&#61;&#34;&#116;&#101;&#115;&#116;&#78;&#97;&#109;&#101;&#34;&#62;&#49;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#110;&#97;&#109;&#101;&#61;&#34;&#116;&#101;&#115;&#116;&#78;&#97;&#109;&#101;&#34;&#62;&#50;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#110;&#97;&#109;&#101;&#61;&#34;&#116;&#101;&#115;&#116;&#78;&#97;&#109;&#101;&#34;&#62;&#51;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#110;&#97;&#109;&#101;&#61;&#34;&#116;&#101;&#115;&#116;&#78;&#97;&#109;&#101;&#34;&#62;&#52;&#60;&#47;&#108;&#105;&#62;&#10;&#60;&#47;&#117;&#108;&#62;
+&lt;script type="text/javascript"&gt;
+	document.getElementsByName('testName')[1].innerHTML;//echo 2 
+&lt;/script&gt;
+					</code>
+				</pre>
+			</section>
+			
+			<section>
+				<h2>getElement<span class="cl-red">s</span>By<span class="cl-red">TagName</span>(tagName)</h2>
+				<p>通过元素的标签名称来获取对应的标签元素</p>
+				<pre>
+					<code>
+&#60;&#117;&#108;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#62;&#49;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#62;&#50;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#62;&#51;&#60;&#47;&#108;&#105;&#62;&#10;&#60;&#47;&#117;&#108;&#62;
+&lt;script type="text/javascript"&gt;
+	document.getElementsByTagName('li')[2].innerHTML; //echo 3
+&lt;/script&gt;
+
+					</code>
+				</pre>
+			</section>
+			
+			<section>
+				<h2>getELement<span class="cl-red">s</span>By<span class="cl-red">ClassName</span>(class)</h2>
+				<p>通过类名来获取对应的元素</p>
+				<pre>
+					<code>
+&#60;&#117;&#108;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#99;&#108;&#97;&#115;&#115;&#61;&#34;&#116;&#101;&#115;&#116;&#45;&#99;&#108;&#97;&#115;&#115;&#34;&#62;&#49;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#99;&#108;&#97;&#115;&#115;&#61;&#34;&#116;&#101;&#115;&#116;&#45;&#99;&#108;&#97;&#115;&#115;&#34;&#62;&#50;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#99;&#108;&#97;&#115;&#115;&#61;&#34;&#116;&#101;&#115;&#116;&#45;&#99;&#108;&#97;&#115;&#115;&#50;&#34;&#62;&#51;&#60;&#47;&#108;&#105;&#62;&#10;&#9;&#60;&#108;&#105;&#32;&#99;&#108;&#97;&#115;&#115;&#61;&#34;&#116;&#101;&#115;&#116;&#45;&#99;&#108;&#97;&#115;&#115;&#34;&#62;&#52;&#60;&#47;&#108;&#105;&#62;&#10;&#60;&#47;&#117;&#108;&#62;
+&lt;script type="text/javascript"&gt;
+	document.getElementsByClassName('test-class')[2].innerHTML; //echo 4	
+&lt;/script&gt;
+					</code>
+				</pre>
+			</section>
+		</article>
+		<aside class="">
+			<section>
+				<header>
+				</header>
+			</section>
+		</aside>
+		<script src="../../public/js/highlight/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var code = document.getElementsByTagName('code');
+			for(var i =0;i<code.length;i++){
+				hljs.initHighlightingOnLoad(code[i]);
+			}
+			var  id = document.getElementById,
+				 name = document.getElementsByName,
+				 tagName = document.getElementsByTagName,
+				 className = document.getElementsByClassName,
+				 div = document.getElementsByTagName('div')[0];
+//			hljs.initHighlightingOnLoad();
+		</script>
+	</body>
+</html>

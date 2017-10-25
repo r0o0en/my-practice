@@ -1,0 +1,192 @@
+
+html,
+body,
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 20px;
+}
+
+dt {
+    color: #0066FF;
+}
+
+h2 {
+    font-size: 1.2rem;
+}
+
+.btn {
+    .no-dbclick-select;
+    margin-bottom: 10px;
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    padding: 5px 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.btn:hover {
+    /*-webkit-box-shadow: inset 0 2px 2px #ccc;
+    -moz-box-shadow: inset 0 2px 2px #ccc;
+    box-shadow: inset 0 2px 2px #ccc;*/
+    -webkit-box-shadow: inset 0 0 2px #ccc;
+    -moz-box-shadow: inset 0 0 2px #ccc;
+    box-shadow: inset 0 0 2px #ccc;
+}
+
+.btn:active {
+    -webkit-box-shadow: inset 0 4px 5px #ccc;
+    -moz-box-shadow: inset 0 4px 5px #ccc;
+    box-shadow: inset 0 4px 5px #ccc;
+}
+
+.cl-red {
+    color: #ff0000;
+}
+
+.text-overline {
+    text-decoration: overline;
+}
+
+.ft-weight-600 {
+    font-weight: 600;
+}
+
+.js-api {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 6px;
+    background-color: #eee;
+    color: #0066FF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    position: relative;
+    &:after {
+        content: 'js';
+        font-size: 12px;
+        position: absolute;
+        top: -12px;
+        right: 0;
+        color: #FF7811;
+    }
+}
+/*
+ 双击选中
+ * */
+.no-dbclick-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    /*早期浏览器*/
+    user-select: none;
+}
+/*
+ 显示、隐藏
+ * */
+.show,.block{
+    display: block;
+}
+.show-inline,.inline{
+    display: inline;
+}
+.show-inline-block,.inline-block{
+    display: inline-block;
+}
+.hide{
+    display: none;
+}
+
+/*
+ pre code
+ * */
+pre{
+    &{
+        font-size: 0;margin-bottom: 10px;
+        
+    }
+    &,code{
+        padding: 0;
+        min-height: 0;
+    }
+    code{
+//      @box : inset  0 0 3px #ccc;
+//      -webkit-box-shadow: @box;
+//      -moz-box-shadow: @box;
+//      box-shadow: @box;
+        margin: 0;
+        font-size: 14px;
+    }
+}
+/*
+ ul、ol 列表样式
+ * */
+ul,ol{
+    list-style: none;
+}
+/*
+ table
+ */
+table{
+    border-collapse: collapse;
+    &.text-center{
+        text-align: center;
+    }
+    &.first-text-left{ 
+        td,th{
+            &:first-child{
+                text-align: left;
+            }
+        }
+    }
+}
+td,th{
+    padding: 4px;
+    border: 1px solid #ccc;
+}
+/*
+ 下划线、模拟下划线
+ * */
+.underline {
+    text-decoration: underline;
+}
+.underline-red{
+    border-bottom: 1px solid red;
+}
+
+/*
+ 通用左右结构
+ * */
+.both-slides{ 
+    display: -webkit-flex;
+    display: flex;
+    /*
+    -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    */
+    &>article {
+        -webkit-flex: 1;
+        flex: 1;
+    }
+    &>article,
+    &>aside {
+        padding: 20px;
+    }
+    &>aside {
+        width: 20%;
+        min-width: 250px;
+        border: 1px solid #ccc;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+    }    
+}

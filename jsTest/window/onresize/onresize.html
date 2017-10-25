@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>window.onload</title>
+		<link rel="stylesheet" type="text/css" href="../../../public/style/lib.css"/>
+	</head>
+	<body>
+		<script src="onresize.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function resize1 (e) {
+				console.log('resize 1');
+			};
+			function resize2 (e) {
+				console.log('resize 2');
+			};
+			function resize3 (e) {
+				console.log('resize 3');
+			};
+			function resize4 (e) {
+				console.log('resize 4');
+			};
+//			onResize(resize1);
+//			onResize(resize2);
+//			onResize(resize3);
+//			onResize(resize4);
+
+			var  resize6 = function(){
+				console.log('resize 6');
+			}
+			addResize(resize1);
+			addResize(resize2);
+			addResize(resize3);
+			addResize(resize4);
+			addResize(function(e){
+				console.log('resize 5',e);
+			});
+			addResize(resize6);
+			console.log(removeResize(resize2));
+			console.log(removeResize(resize3));
+//			removeResize(resize4);
+		</script>
+	</body>
+</html>

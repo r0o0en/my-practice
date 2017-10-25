@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>HTMLElement</title>
+		<link rel="stylesheet" type="text/css" href="../../public/js/highlight/styles/atelier-forest-dark.css"/>
+		<link rel="stylesheet" type="text/css" href="../../public/style/lib.css" />
+		
+		<style type="text/css">
+			table{width: 100%;border-collapse: collapse;}
+			tr{width: 100%;text-align: center;}
+			th,td{
+				border: 1px solid #ccc;
+			}
+			@media only screen and (max-width: 1024px) {
+				aside {
+					display: none;
+				}
+			}
+			
+		</style>
+	</head>
+
+	<body class="both-slides">
+		<!--正文-->
+		<article>
+			<header>
+				<h1>HTMLElement</h1>
+				<p>HTMLElement 接口表示所有的 HTML 元素。一些 HTML 元素直接实现了 HTMLElement 接口，其他的间接实现了 HTMLElement 接口。</p>
+				<p>继承自父接口 <span class="js-api">Element</span> 和 <span class="js-api">GlobalEventHandlers</span> 接口。</p>
+				<p>兼容性：IE9及以上</p>
+			</header>
+
+			<section>
+				<header>
+					<h2>如何判断一个 JS对象 是否是一个 DOM对象</h2>
+				</header>
+				<dl>
+					<dt><span class="cl-red">思路：</span></dt>
+					<dd>要判断一个JS对象是否DOM对象，从它是否具有DOM对象的各种属性和特征！比如：<span class="js-property">nodeType</span>、<span class="js-property">nodeName</span>、<span class="js-property">tagNmae</span>等属性来判断。</dd>
+					<dt><span class="cl-red">但是：</span></dt>
+					<dd>我们自己定义的 JS Object 也可以拥有这些属性，有没有更好的办法？</dd>
+					<dt><span class="">DOM level 2 标准 —— HTMLElemnt对象</span></dt>
+					<dd>
+						<p class="underline">DOM level 2 标准中定义了一个HTML对象，它规定<span class="cl-red ft-weight-600">所有的DOM对象都是HTMLElement的实例</span>。</p>
+						<p>所以我们可以利用HTMLElment来判断一个对象是不是DOM对象。</p>
+					</dd>
+					<dt><span>判断思路:</span></dt>
+					<dd>如果该对象是HTMLElement对象的实例，则它肯定是一个DOM对象。在不支持HTMLElement的浏览器中，则使用特征检测</dd>
+				</dl>
+				<pre>
+					<code >
+var isDom = window.HTMLElement ?
+	function (obj) {
+		return obj instanceof HTMLElement;
+	}:
+	function (obj) {
+		return obj && typeof obj =='object' && obj.nodeType == 1  && typeof obj.nodeName == 'string'; 
+	};
+					</code>
+				</pre>
+			</section>
+			
+			<section>
+				<header>
+					<h2>通过HTMLElement扩展 dom</h2>
+					<p>有时候我们封装一些方法的时候，需要将这个方法扩展到dom的原型上，方便dom对象可以直接调用这个方法进行运算。这个时候，我们可以利用HTMLElment来进行扩展，因为所有的DOM对象都是HTMLElement的实例。</p>
+				</header>
+				<dl>
+					<dt>支持 HTMLElement 的浏览器</dt>
+					<dd>直接通过 HTMLElement.prototype 进行扩展</dd>
+					<dt>不支持 HTMLElement 的浏览器 （<span class="cl-red">IE8及以下</span>）</dt>
+					<dd>遍历所有元素，对每个元素依次进行扩展</dd>
+				</dl>
+				
+			</section>
+		</article>
+		<!--额外的信息-->
+		<aside>
+			<header>
+				<h1>HTML DOM Element 对象</h1>
+				<p>每个 html 元素都是 HTMLElement 对象</p>
+			</header>
+			<section>
+				<h2> HTML DOM 节点</h2>
+				<p>在 HTML DOM（文档对象模型）中，每个部分都是节点：</p>
+				<dl>
+					<dt>文档节点：</dt>
+					<dd>文档本身是文档节点。</dd>
+					<dt>元素节点：</dt>
+					<dd>所有 HTML 元素都是元素节点</dd>
+					<dt>属性节点：</dt>
+					<dd>所有 THML 属性是属性节点</dd>
+					<dt>文本节点：</dt>
+					<dd>HTML 元素内的文本是文本节点</dd>
+					<dt>注释节点：</dt>
+					<dd>注释也属于节点，即注释节点</dd>
+				</dl>
+				<table>
+					<tr><th>节点类型</th><th>nodeType</th></tr>
+					<tr><td>文档节点</td><td>9</td></tr>
+					<tr><td>元素节点</td><td>1</td></tr>
+					<tr><td>属性节点</td><td>2</td></tr>
+					<tr><td>文本节点</td><td>3</td></tr>
+					<tr><td>注释节点</td><td>8</td></tr>
+				</table>
+			</section>
+			<section>
+				<h2>Element对象</h2>
+				<p>在 HTML DOM 中 , Element 对象表示 HTML 元素 。 </p>
+				<p>Element 对象可以拥有类型为 元素节点 、 文本节点、注释节点的子节点。</p>
+				<p>NodeList 对象表示节点列表，比如HTML元素的子节点列表。</p>
+				<p>元素也可以拥有属性，属性是属性节点。</p>
+			</section>
+			<section>
+				<h2>nodeName 和 tagName</h2>
+				<p>dom 常见的四种节点类：元素节点、属性节点、文本节点、注释节点 。</p>
+				<p>tagName 和 nodeName 语义都是返回所包含标签的名称，但是：<!--这是一个注释节点--></p>
+				<dl>
+					<dt>nodeName：</dt>
+					<dd>
+						nodeName 可以在所有的节点上使用。
+					</dd>
+					<dt>tagName：</dt>
+					<dd>
+						tagName 只能在 元素节点（元素标签） 上使用。
+					</dd>
+				</dl>
+			</section>
+		</aside>
+
+		<script src="../../public/js/highlight/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var code = document.getElementsByTagName('code');
+			for(var i =0;i<code.length;i++){
+				hljs.initHighlightingOnLoad(code[i]);
+			}
+//			hljs.initHighlightingOnLoad();
+		</script>
+
+		<script type="text/javascript">
+			/*
+			 判断 js对象 是否属于 dom对象
+			 * */
+			var isDom = window.HTMLElement ?
+						function (obj) {
+							return obj instanceof HTMLElement;
+						}:
+						function (obj) {
+							return obj && typeof obj =='object' && obj.nodeType == 1  && typeof obj.nodeName == 'string'; 
+ 						};
+ 			
+			var p = document.getElementsByTagName('P');
+			for (var i in p) {
+				var _this = p[i];
+				if(_this.nodeType !== 1){
+					continue;
+				}
+//				console.log('['+i+'] —— [typeNode=' +_this.nodeType+']');
+//				console.log(isDom(_this),_this.nodeName,_this.tagName)	;
+			};
+		</script>
+		
+		<script type="text/javascript">
+			/*
+			 扩展dom 
+			 	1、    支持 HTMLElement 的浏览器：使用 HTMLElement.prototype 进行扩展
+			 	
+			 	2、不支持 HTMLElement 的浏览器：  IE8及以下版本浏览器没有HTMLElement这个基对象，要在IE8及以下版本浏览器中扩展DOM元素的成员属性
+			 	┃
+			 	┠─ 1、遍历所有元素，对每个元素逐个扩展 （缺点：遍历扩展的成员只在已有的dom对象上有效，新增节点的dom对象上任然没有这个需要扩展的成员，）
+			 	┃
+			 	┠─ 2、IE8浏览器可以通过，找到具体的每一个元素构造器的原型，然后对其逐个绑定。（元素构造器原型的列表下面）
+			 	┃
+			 	┠─ 3、IE8浏览器可以通过 :
+			 	┃	Object.definePrototype(ELment.prototype,'isDom',{
+			 	┃		get:function(){return this.nodeType ==1 && typeof this.nodeName =='string';}
+			 	┃		//,set:function(d){ this.isDom = d;}
+			 	┃	})
+			 	┃
+			 	┠─ 3、if(window.constructor){
+			 	┃		element.constructor.prototype
+				┃ 	}:
+			 	┃
+			 	┃	下面这些是IE8中支持的元素构造器列表：
+				 		[
+						  "HTMLUnknownElement","HTMLUListElement","HTMLTitleElement",
+						  "HTMLTextAreaElement","HTMLTableSectionElement",
+						  "HTMLTableRowElement","HTMLTableElement","HTMLTableColElement",
+						  "HTMLTableCellElement","HTMLTableCaptionElement",
+						  "HTMLStyleElement","HTMLSpanElement","HTMLSelectElement",
+						  "HTMLScriptElement","HTMLParamElement","HTMLParagraphElement",
+						  "HTMLOptionElement","HTMLObjectElement","HTMLOListElement",
+						  "HTMLMetaElement","HTMLMarqueeElement","HTMLMapElement",
+						  "HTMLLinkElement","HTMLLegendElement","HTMLLabelElement",
+						  "HTMLLIElement","HTMLInputElement","HTMLImageElement",
+						  "HTMLIFrameElement","HTMLHtmlElement","HTMLHeadingElement",
+						  "HTMLHeadElement","HTMLHRElement","HTMLFrameSetElement",
+						  "HTMLFrameElement","HTMLFormElement","HTMLFontElement",
+						  "HTMLFieldSetElement","HTMLEmbedElement","HTMLDivElement",
+						  "HTMLDListElement","HTMLButtonElement","HTMLBodyElement",
+						  "HTMLBaseElement","HTMLBRElement","HTMLAreaElement",
+						  "HTMLAnchorElement","HTMLDocument"
+						];
+			 * */
+			if(window.HTMLElement){
+//				HTMLElement.prototype.isDom = function(){
+//					return this instanceof HTMLElement;
+//				};
+			}else{
+				/*
+				 1. 遍历所有元素，逐个扩展所需的成员方法、成员属性
+				 document.all 兼容性：IE4以上
+				 * */
+//				(function(ele){
+//					for( var i = 0; i< ele.length ; i ++){
+//						ele[i].isDom = function(){
+//							return this.nodeType == 1 && typeof this.nodeName == 'string'; 
+//						}
+//					}
+//				}(document.all));
+				
+				/*
+				 2. IE8 版本浏览器： 要找到具体的每一个元素构造器的原型，然后对其逐个绑定需要的成员属性、方法。
+				 * */
+//				 ;(function() {
+//					var arr = [
+//						  "HTMLUnknownElement","HTMLUListElement","HTMLTitleElement",
+//						  "HTMLTextAreaElement","HTMLTableSectionElement",
+//						  "HTMLTableRowElement","HTMLTableElement","HTMLTableColElement",
+//						  "HTMLTableCellElement","HTMLTableCaptionElement",
+//						  "HTMLStyleElement","HTMLSpanElement","HTMLSelectElement",
+//						  "HTMLScriptElement","HTMLParamElement","HTMLParagraphElement",
+//						  "HTMLOptionElement","HTMLObjectElement","HTMLOListElement",
+//						  "HTMLMetaElement","HTMLMarqueeElement","HTMLMapElement",
+//						  "HTMLLinkElement","HTMLLegendElement","HTMLLabelElement",
+//						  "HTMLLIElement","HTMLInputElement","HTMLImageElement",
+//						  "HTMLIFrameElement","HTMLHtmlElement","HTMLHeadingElement",
+//						  "HTMLHeadElement","HTMLHRElement","HTMLFrameSetElement",
+//						  "HTMLFrameElement","HTMLFormElement","HTMLFontElement",
+//						  "HTMLFieldSetElement","HTMLEmbedElement","HTMLDivElement",
+//						  "HTMLDListElement","HTMLButtonElement","HTMLBodyElement",
+//						  "HTMLBaseElement","HTMLBRElement","HTMLAreaElement",
+//						  "HTMLAnchorElement","HTMLDocument"
+//						];
+//					for (var i = 0 ; i < arr.length ; i++) {
+//						//console.log(arr[i],window[arr[i]]);
+//						if(window[arr[i]]){
+//							//console.log(i,arr[i],window[arr[i]],window[arr[i]].prototype);
+//							window[arr[i]].prototype.isDom = function () {
+//								return this.nodeType == 1 && typeof this.nodeName == 'string';
+//							}
+//						}
+//					}
+//				 }());
+				 /*
+				  3. IE8 版本浏览器：不推荐  
+				  * */
+//				 Object.defineProperty(Element.prototype, "idDom",{ 
+//				    get: function () { return this.nodeType && typeof this.nodeName == 'string'; } 
+//				 }); 
+			};
+			
+			window.onload = function(){
+				var testp = document.getElementsByTagName('p');
+				for(var i = 0; i<testp.length;i++){
+					console.log(i,'DOMObj.isDom() = ',testp[i].isDom());
+				} 				
+			}
+			
+			
+			/*
+			 1、window.isIE(num);
+			 	封装一个判断IE浏览器的方法，默认返回  IEOversions or false  ,可以传入一个int参数num ,为IE浏览器时，将会判断	当前IE浏览器版本  == num  返回 true/false
+			 2、
+			 	elements.isDom();
+			 
+			 * */
+			;(function (doc,win) {
+				window.isIE = function (num) {
+					var n = navigator.userAgent;
+					if(/MSIE/ig.test(n)){
+						var versions = n.match(/MSIE\s+\d+\.+\d+/ig);;
+						versions = versions[0].split(/\s+/ig);
+						if(num){
+							if(typeof num == 'number' && versions[1] == num){
+								return true;
+							}else{
+								return false;
+							}
+						}else{
+							return versions[0];
+						}
+					}else{
+						return false;
+					}
+				}
+				
+				if(win.HTMLElement){
+					HTMLElement.prototype.isDom = function () {
+						return this instanceof HTMLElement;
+					};
+				}else if(isIE(8)){
+					var arr = [
+						  "HTMLUnknownElement","HTMLUListElement","HTMLTitleElement",
+						  "HTMLTextAreaElement","HTMLTableSectionElement",
+						  "HTMLTableRowElement","HTMLTableElement","HTMLTableColElement",
+						  "HTMLTableCellElement","HTMLTableCaptionElement",
+						  "HTMLStyleElement","HTMLSpanElement","HTMLSelectElement",
+						  "HTMLScriptElement","HTMLParamElement","HTMLParagraphElement",
+						  "HTMLOptionElement","HTMLObjectElement","HTMLOListElement",
+						  "HTMLMetaElement","HTMLMarqueeElement","HTMLMapElement",
+						  "HTMLLinkElement","HTMLLegendElement","HTMLLabelElement",
+						  "HTMLLIElement","HTMLInputElement","HTMLImageElement",
+						  "HTMLIFrameElement","HTMLHtmlElement","HTMLHeadingElement",
+						  "HTMLHeadElement","HTMLHRElement","HTMLFrameSetElement",
+						  "HTMLFrameElement","HTMLFormElement","HTMLFontElement",
+						  "HTMLFieldSetElement","HTMLEmbedElement","HTMLDivElement",
+						  "HTMLDListElement","HTMLButtonElement","HTMLBodyElement",
+						  "HTMLBaseElement","HTMLBRElement","HTMLAreaElement",
+						  "HTMLAnchorElement","HTMLDocument"
+						];
+					for (var i = 0 ; i < arr.length ; i++) {
+						if(window[arr[i]]){
+							window[arr[i]].prototype.isDom = function () {
+								return this.nodeType == 1 && typeof this.nodeName == 'string';
+							}
+						}
+					}
+					
+				}else{
+					for( var i = 0; i< doc.all.length ; i ++){
+						doc.all[i].isDom = function(){
+							return this.nodeType == 1 && typeof this.nodeName == 'string'; 
+						}
+					}
+				}
+			}(document,window));
+		</script>
+	</body>
+
+</html>

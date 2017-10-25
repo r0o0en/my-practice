@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件绑定</title>
+		
+		<link rel="stylesheet" type="text/css" href="../../public/style/lib.css"/>
+		<style type="text/css">			
+			li.btn{display: block;max-width: 200px;text-align: center;}
+		</style>
+	</head>
+	<body>
+		<a  class="btn"onclick="console.log('直接绑定',this);"> 点击一下 </a>
+		<p>&lt;a onclick="console.log('直接绑定',this);"&gt;&lt;/a&gt;</p>
+		<br />
+		<a  class="btn"id="testa"> testa </a>
+		<p>element.onclick=function(e){console.log('js绑定',this,e);}</p>
+		<br />
+		<a  class="btn"id="testb"> testb </a>
+		<dl>
+			<dt>非IE浏览器</dt>
+			<dd>target.addEventListener(type,listener,useCapture) <br /> target.removeEventListener(type,listener,useCapture)</dd>
+			<dt>IE浏览器</dt>
+			<dd>target.attachEvent(type,listener) <br /> target.detachEvent(type,listener)</dd>
+		</dl>
+		<br />
+		<a  class="btn"id="testc"> testc </a>
+		<dl>
+			<dt>判断浏览器支持 addEventListener 或 attachEvent</dt>
+			<dd>target.addEventListener ? target.addEventListener() : target.attachEvent() ;</dd>
+		</dl>
+		<br />
+		<!--<ul>
+			<li class="btn">点击一下试试(1)</li>
+			<li class="btn">点击一下试试(2)</li>
+			<li class="btn">点击一下试试(3)</li>
+		</ul>-->
+		
+		<script type="text/javascript">
+			
+			/*
+			 一、直接在标签上绑定事件
+			 <a  class="btn"onclick="clickFun(this);">点击</a>
+			 直接，一目了然，但是不利于维护
+			 */
+			
+			/*
+			 二、通过onclick 直接绑定 
+			 element.onclick = function(){}
+			  这种绑定事件方式 就是 对象指针 赋值，每次赋值都会将之前的值替换掉，所以同一个element上，只有最后一次绑定的方法生效
+			  比如下面 绑定了两次 1和2 ,最后点击按钮后，控制台只会打印出 2
+			   
+			 * */
+			console.log('=====【  testa 】=====');
+			var testa = document.getElementById('testa');
+			try{
+				testa.childNodes.forEach(function (val,i,arr) {
+					console.log('testa['+i+'] = ',val,'testa['+i+'].nodeType = ',val.nodeType);
+				})				
+			}catch(e){
+				console.error('错误预处理 （forEach）',e);
+			}
+			testa.onclick = function (e) {
+				console.log(1,this,e);
+			}
+			testa.onclick = function (e) {
+				console.log(2,this,e);
+			}
+			//注： 这种方式解除事件绑定 只需要 element.onclick = null; 即可
+			//testa.onclick = null; 
+			
+			/*
+			 三、根据不同浏览器，使用不同的方法给 target(element)绑定事件
+			 	┣━ 非IE浏览器 （ie8以下(包括)会报错）
+			 	┃	│
+			 	┃	├── target.addEventListener(type,listener,useCapture);
+			 	┃	│
+			 	┃	├── target.removeEventListener(type,listener,useCapture);
+			 	┃	│
+			 	┃	├── 注意 callback = function(e){ this == e.target == target ; }
+			 	
+			 	┣━ IE浏览器   ( 支持 ie10 及以下 )
+			 	┃	│
+			 	┃	├── target.attachEvent(type,listener);
+			 	┃	│
+			 	┃	├── target.detachEvent(type,listener);
+			 	┃	│
+			 	┃	├── 注意  callback = function(e){ this == window; this.srcElement == target; }
+			 
+			 	target:文档节点、document/window 或 XMLHttpRequest
+			 	type:事件类型,字符串，'click' （ie需要带on 》 'onclick'）
+			 	listener：监听器，即 事件触发执行的函数callback
+			 	
+			 	优点：同一个元素，同一个事件类型type,可以多次绑定不同的事件监听，
+			 		触发顺序
+			 			├── 非IE、ie9及以上： 当事件触发时，每个监听回调会根据绑定的先后顺序,依次从最先绑定的开始触发
+			 			│
+			 			├── IE8及以下 ：   当事件触发时，每个监听回调会根据绑定的先后顺序,依次从最后绑定的开始触发
+			 	var testb = document.getElementById('testb');
+			 	testb.addEventListener('click',callback_1,true);
+			 	testb.addEventListener('click',callback_2,true);
+			 	testb.addEventListener('click',callback_3,true);
+			 	//当点击 testb 后,三个事件监听都会被触发，非IE及ie8以上的浏览器中触发的顺序为： callback_1 → callback_2 → callback_3
+			 * */ 
+			 console.log('=====【  testb 】=====');
+			var testb = document.getElementById('testb');
+			try{
+				testb.addEventListener('click',function(e){console.log('addEventListener_1',this);},true);
+				testb.addEventListener('click',function (e) {console.log('addEventListener_2',this);},true);
+				testb.addEventListener('click',function (e) {console.log('addEventListener_3',this);},true);				
+			}catch(e){
+				console.log(e);
+			};
+			try{
+				testb.attachEvent('onclick',function (e) {console.log('attachEvent_1',this);});
+				testb.attachEvent('onclick',function (e) {console.log('attachEvent_2',this);});				
+			}catch(e){
+				console.log(e);
+			};
+			
+			/*
+			 三.1
+			 因为 addEventListener 和 attachEvent 对IE等浏览器的兼容性差异，每次使用进行判断非常麻烦，所以可以对其进行封装
+			 * */
+			console.log('=====【  testc 】=====');
+			console.log( testb.addEventListener ? '支持' :'不支持' , ' target.addEventListener');
+			console.log( testb.attachEvent ? '支持' :'不支持' , ' target.attachEvent');
+			//封装 事件 监听函数
+			
+			(function (doc) {
+				//var addEvent = new Function();	
+				window.addEvent = doc.addEventListener ?
+								function (target,type,listener,useCapture) {
+									if(arguments.length<3){return false;};
+									target.addEventListener(type,listener,useCapture);
+								}:
+								function (target,type,listener) {
+									if(arguments.length<3){return false;};
+									target.attachEvent('on'+type,listener);
+								};
+									
+				window.removeEvent = doc.addEventListener ?
+								function (target,type,listener,useCapture) {
+									if(arguments.length<3){return false;};
+									target.removeEventListener(type,listener,useCapture);
+								}:
+								removeEvent = function (target,type,listener) {
+									if(arguments.length<3){return false;}
+									target.detachEvent('on'+type,listener);
+								};
+//				if(doc.addEventListener){
+//					addEvent = function (target,type,listener,useCapture) {
+//						if(arguments.length<3){return false;};
+//						target.addEventListener(type,listener,useCapture);
+//					};
+//					removeEvent = function (target,type,listener,useCapture) {
+//						if(arguments.length<3){return false;};
+//						target.removeEventListener(type,listener,useCapture);
+//					}
+//				}else if(doc.attachEvent){
+//					addEvent = function (target,type,listener) {
+//						if(arguments.length<3){return false;};
+//						target.attachEvent('on'+type,listener);
+//					}
+//					removeEvent = function (target,type,listener) {
+//						if(arguments.length<3){return false;}
+//						target.detachEvent('on'+type,listener);
+//					}
+//				}else{
+//					addEvent = function () {
+//						console.error('浏览器没有合适的事件监听方式,'+type+'事件监听失败!');
+//					}
+//					removeEvent = function () {
+//						console.error('浏览器没有合适的事件解除监听方式,'+type+'事件解除监听失败!');
+//					}
+//				};
+			}(document));
+			
+			var testc = document.getElementById('testc'),
+				testcClickOne = function (e) {
+					console.log('testc click one',this,e.srcElement || e.target,e);
+				},
+				testcClickTwo = function (e) {
+					console.log('testc click two',this,e.srcElement || e.target,e);
+//					console.log(e,e.target);
+					removeEvent(e.srcElement || e.target,'click',testcClickOne);
+					removeEvent(e.srcElement || e.target,'click',testcClickTwo);
+				};
+			addEvent(testc,'click',testcClickOne);
+			addEvent(testc,'click',testcClickTwo);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html style="font-size: 50px;">
+	<head>
+		<meta charset="UTF-8">
+		<title>rem 自适应</title>
+		<meta name="author" content="" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, minimal-ui">
+		<meta name="telephone=no" content="format-detection">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<Meta http-equiv="Pragma" Content="No-cach">
+		<style type="text/css">
+			html,body{
+				/*width: 100%;
+				height: 100%;
+				overflow: hidden;*/
+			}
+			body{
+				overflow-y: auto;
+			}
+			html,body,h1,h4,p,ul,li,p{
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				padding: 0;
+				margin: 0;
+			}
+			img{
+				border: none;
+				display: block;
+				width: 100%;
+			}
+			h1{
+				font-size: 0.3rem;
+			}
+			.smooth-move{
+				/*-webkit-overflow-scrolling: touch;*/
+			}
+			.list{min-height: 18rem;}
+			.list li{
+				display: -webkit-flex;
+				display: flex;
+				padding: 0.3rem;
+			}
+			.list li img{
+				width: 1.2rem;
+				height: 1.2rem;
+				margin-right: 0.3rem;
+			}
+			.list li .content{
+				-webkit-flex: 1;
+				flex: 1;
+				font-size: 0.2rem;
+			}
+			.list li .content h4{
+				/*font-weight: 400;*/
+				font-size: 0.24rem;
+				line-height: 1.2;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+			}
+			.list li .content p{
+				color: #666;
+			}
+			dl{
+				padding: 0.2rem;
+			}
+			dt{
+				font-size: 0.3rem;
+			}
+			dd{
+				margin-left: 0.6rem;
+				font-size: 0.26rem;
+			}
+		</style>
+	</head>
+	<body class="smooth-move">
+		<img class="banner" src="http://scimg.jb51.net/allimg/151029/13-151029104415M1.jpg"/>
+		
+		<dl>
+			<dt>费用包含：</dt>
+			<dd>根据您预订的上下车地址，您支付的总价包含一次接机/送机用车服务的全部费用。</dd>
+			<dt>费用不包含：</dt>
+			<dd>和用车无直接关联的费用，例如景区门票等。</dd>
+		</dl>
+		
+		<ul class="list">
+			<li>
+				<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=634098145,264198475&fm=27&gp=0.jpg"/>
+				<div class="content">
+					<h4>这是一个卡通头像，他的样子比较可爱，年龄比较小，可能就几岁的样子，但是，我还是要多打几个字来验证一下</h4>
+					<p>这是一个卡通头像，他的样子比较可爱，年龄比较小，可能就几岁的样子，但是，我还是要多打几个字来验证一下。不够的时候还可以复制几遍！</p>
+				</div>
+			</li>
+			<li>
+				<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=634098145,264198475&fm=27&gp=0.jpg"/>
+				<div class="content">
+					<h4>这是一个卡通头像，他的样子比较可爱，年龄比较小，可能就几岁的样子，但是，我还是要多打几个字来验证一下</h4>
+					<p>这是一个卡通头像，他的样子比较可爱，年龄比较小，可能就几岁的样子，但是，我还是要多打几个字来验证一下。不够的时候还可以复制几遍！</p>
+				</div>
+			</li>
+		</ul>
+		
+		<script src="http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.0.0.0" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+//			var vConsole = new VConsole();
+			(function (doc,win) {
+				function defineRem (maxW) {
+					/*
+					 clientW >= maxW 时  1rem = 100px , 小于等于时 1rem = 100 * clientW/maxW;
+					 * */
+					var maxW = maxW || 640,
+						clientW = doc.documentElement.clientWidth ? doc.documentElement.clientWidth : doc.body.clientWidth ;
+					doc.documentElement.style.fontSize = 100 * ( clientW >= maxW ? 1 : clientW/maxW) + 'px';
+				};
+				defineRem();
+				win.onresize = function () {
+					defineRem();
+				};
+				
+				var ul = document.getElementsByClassName('list')[0],
+					li = ul.innerHTML;
+				for(var i = 0 ; i <= 5 ; i ++){
+					ul.innerHTML =  ''+ ul.innerHTML + li ; 
+				}
+			})(document,window);
+		</script>
+	</body>
+</html>
