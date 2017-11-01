@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>call 和 apply</title>
+		<link rel="stylesheet" type="text/css" href="../public/js/highlight/styles/atelier-forest-dark.css"/>
+		<link rel="stylesheet" type="text/css" href="../public/style/lib.css" />
+	</head>
+	<body class="both-area">
+		<article>
+			<header>
+				<h1>call() 和 apply()</h1>
+				<p>在 <span class="underline-red">Function.prototype</span>中，有<span class="cl-red">call()</span>和<span class="cl-red">apply()</span>两个方法,它们可以：<span class="cl-red">使一个函数使用一个指定的this进行运算。</span></p>
+			</header>
+			<pre><code>
+//现有对象 a 和 b 
+var a = {
+	x:9,
+	y:10
+},
+b = {
+	x:1,
+	y:2,
+	add:function(){
+		console.log( this.x + ' + ' + this.y +' = ', this.x + this.y );
+	}
+};
+//其中对象B有方法 add
+b.add(); // 输出 1 + 2 =  3；
+//Function.prototype.call
+b.add.call(a);  //输出9 + 10 =  19  这是同样运行了b.add方法，但是call(a)使b.fun执行时其作用域中的 this = a
+//function.prototype.apply
+b.add.apply(a); //输出 9 + 10 =  19 
+			</code></pre>
+			<section>
+				<header><h1>Function.prototype.call</h1></header>
+				<p>call()方法调用一个函数 fun，使fun具有<span class="underline-red"> 一个指定的this值 </span>和分别提供的参数（参数的列表）。</p>
+				<p>fun.call(thisArg,arg1,arg2,...)</p>
+			</section>
+			
+			<dl>
+				<dt>Function.prototype.call</dt>
+				<dd>fun.call(thisArg,<span class="cl-red">arg1,arg2,...</span>)</dd>
+				<dt>apply</dt>
+				<dd>fun.apply(thisArg,<span class="cl-red">[arg1,arg2,...]</span>)</dd>
+			</dl>
+		</article>
+		<aside></aside>
+		<script src="../public/js/highlight/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var code = document.getElementsByTagName('code');
+			for(var i =0;i<code.length;i++){
+				hljs.initHighlightingOnLoad(code[i]);
+			}
+			//现有对象 a 和 b 
+			var a = {
+					x:9,
+					y:10
+				},
+				b = {
+					x:1,
+					y:2,
+					add:function(){
+						console.log( this.x + ' + ' + this.y +' = ', this.x + this.y );
+					}
+				};
+			//其中对象B有方法 add
+			b.add(); // 输出 1 + 2 =  3；
+			//Function.prototype.call
+			b.add.call(a);  //输出9 + 10 =  19 ，这是同样运行了b.add方法，但是call(a)使b.fun执行时其作用域中的 this = a
+			//function.prototype.apply
+			b.add.apply(a); //输出 9 + 10 =  19 
+		</script>
+	</body>
+</html>

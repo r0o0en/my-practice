@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>监听 input</title>
+		<meta name="author" content="www.jlhmsh.com"/>
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		
+		<meta name="renderer" content="webkit">
+		<meta http-equiv= "X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, minimal-ui">
+		<meta name="telephone=no" content="format-detection">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="x-rim-auto-match" content="none">
+		<meta http-equiv="Pragma" contect="no-cache">
+	</head>
+	<body>
+		<br />	<br />
+		<input type="text" name="" id="watch" placeholder="打印 val" />
+		<br />	<br />
+		<input type="text" name="" id="number" placeholder="只允许输入数字" />
+		<br />	<br />
+		<input type="text" name="" id="tel" placeholder="1-11手机号" />
+		<br />	<br />
+		<input type="text" name="" id="email" placeholder="邮箱" />
+		<br />	<br />
+		
+		<script src="../../public/js/jquery/jquery-1.12.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function () {
+				$('#watch').watch(function (_this,val) {
+					console.log('watch',val,_this);
+				});
+				$('#number').inputOnlyNumber(function (_this,val) {
+					console.log('inputOnlyNumber',val,_this);
+				});
+				$('#tel').inputOnlyTel(function (_this,val,judeg) {
+					console.log('inputOnlyTel',val,_this,judeg);
+				});
+				$('#email').inputOnlyEmail(function (_this,val) {
+					console.log('inputOnlyEmail',val,_this);
+				});
+			})
+		</script>
+	</body>
+</html>

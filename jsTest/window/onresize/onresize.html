@@ -25,19 +25,20 @@
 //			onResize(resize3);
 //			onResize(resize4);
 
-			var  resize6 = function(){
-				console.log('resize 6');
+			var  resize6 = function(e){
+				console.log('resize 6',e);
 			}
 			addResize(resize1);
 			addResize(resize2);
 			addResize(resize3);
 			addResize(resize4);
 			addResize(function(e){
-				console.log('resize 5',e);
+				console.log('resize 5');
 			});
 			addResize(resize6);
+			console.log(removeResize(resize1));
 			console.log(removeResize(resize2));
-			console.log(removeResize(resize3));
+			console.log(removeResize(2));
 //			removeResize(resize4);
 		</script>
 	</body>

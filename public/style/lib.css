@@ -113,7 +113,13 @@ pre code {
   padding: 0;
   min-height: 0;
 }
+pre code.hljs {
+  padding: 0.5rem 1rem;
+}
 pre code {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
   margin: 0;
   font-size: 14px;
 }
@@ -154,7 +160,7 @@ th {
 /*
  通用左右结构
  * */
-.both-slides {
+.both-area {
   display: -webkit-flex;
   display: flex;
   /*
@@ -163,15 +169,15 @@ th {
     flex-direction: row-reverse;
     */
 }
-.both-slides > article {
+.both-area > article {
   -webkit-flex: 1;
   flex: 1;
 }
-.both-slides > article,
-.both-slides > aside {
+.both-area > article,
+.both-area > aside {
   padding: 20px;
 }
-.both-slides > aside {
+.both-area > aside {
   width: 20%;
   min-width: 250px;
   border: 1px solid #ccc;
